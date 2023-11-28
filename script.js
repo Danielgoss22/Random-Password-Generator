@@ -1,6 +1,3 @@
-// Assignment code here
-
-// Get references to the #generate element
 var lowerCase = [
   "a",
   "b",
@@ -130,43 +127,47 @@ function passwordOptions() {
 }
 
 function generatePassword() {
-  var custInfo = passwordOptions();
-  // var custInfo = garuantee();
-  // var custInfo = finalOutput();
-  //empty array = garuntee array, var garuntee need another array called possibilities take these and randomize against a random function then join into a final array then turn that array into a string declare 3 empty arrays
-  //take custinfo with conditions to make sure it is true
-  if (custInfo.isLowerCase) {
-    passwordOptions = passwordOptions.concat(lowerCase);
-    passwordOptions.push(getRandom(lowerCase));
-  }
-  if (custInfo.isUpperCase) {
-    passwordOptions = passwordOptions.concat(upperCase);
-    passwordOptions.push(getRandom(upperCase));
-  }
-  if (custInfo.isSpecialCharaters) {
-    passwordOptions = passwordOptions.concat(specialCharacters);
-    passwordOptions.push(getRandom(specialCharacters));
-  }
-  if (custInfo.isNumericCharacters) {
-    passwordOptions = passwordOptions.concat(numericCharacters);
-    passwordOptions.push(getRandom(numericCharacters));
+  var randPass = passwordOptions();
+
+  var finalOutput = [];
+
+  var possibleChars = [];
+
+  var chosenChars = [];
+  if (randPass.hasLowerCase) {
+    possibleChars = possibleChars.concat(lowerCase);
+    chosenChars.push(getRandom(lowerCase));
   }
 
-  //randomize my garuantee
-  // for (let i = 0; i < garuantee.length; i++) {
-  //   result[i] = garuantee[i];
-  // }
-  // for (let i = 0; i < custInfo.length; i++) {
-  //   var possible = getRandom[possibilities];
-  //   result.push(possible);
-  // }
+  if (randPass.hasUpperCase) {
+    possibleChars = possibleChars.concat(upperCase);
+    chosenChars.push(getRandom(upperCase));
+  }
+  if (randPass.hasSpecialCharaters) {
+    possibleChars = possibleChars.concat(specialCharacters);
+    chosenChars.push(getRandom(specialCharacters));
+  }
+  if (randPass.hasNumericCharacters) {
+    possibleChars = possibleChars.concat(numericCharacters);
+    chosenChars.push(getRandom(numericCharacters));
+  }
+  var numberOfRand = randPass.length - chosenChars.length;
+
+  for (let index = 1; index < numberOfRand; index++) {
+    var randomChar = getRandom(possibleChars);
+    finalOutput.push(randomChar);
+  }
+  finalOutput = finalOutput.concat(chosenChars);
+
+  finalOutput.push(numberOfRand);
+  return finalOutput.join("");
 }
 function getRandom(arr) {
   var index = Math.floor(Math.random() * arr.length);
   var randomElement = arr[index];
   return randomElement;
 }
-// Write password to the #password input
+
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -174,5 +175,4 @@ function writePassword() {
   passwordText.value = password;
 }
 
-// Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
