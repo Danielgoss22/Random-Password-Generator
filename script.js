@@ -103,67 +103,69 @@ function passwordOptions() {
     alert("The selection must be a number between 8 and 128.");
     return null;
   }
-  var isLowerCase = confirm("Do you want lowercase letters in your password?");
-  var isUpperCase = confirm("Do you want uppercase letters in your password?");
-  var isSpecialCharaters = confirm(
+  var hasLowerCase = confirm("Do you want lowercase letters in your password?");
+  var hasUpperCase = confirm("Do you want uppercase letters in your password?");
+  var hasSpecialCharaters = confirm(
     "Do you want special characters in your password?"
   );
-  var isNumericCharacters = confirm("Do you want numbers in your password?");
+  var hasNumericCharacters = confirm("Do you want numbers in your password?");
   if (
-    isLowerCase === false &&
-    isUpperCase === false &&
-    isSpecialCharaters === false &&
-    isNumericCharacters === false
+    hasLowerCase === false &&
+    hasUpperCase === false &&
+    hasSpecialCharaters === false &&
+    hasNumericCharacters === false
   ) {
-    alert("Must choose one character type.");
+    alert("Must choose at least one character type.");
     return null;
   }
 
   var userInput = {
     length: length,
-    isLowerCase: isLowerCase,
-    isUpperCase: isUpperCase,
-    isSpecialCharaters: isSpecialCharaters,
-    isNumericCharacters: isNumericCharacters,
+    hasLowerCase: hasLowerCase,
+    hasUpperCase: hasUpperCase,
+    hasSpecialCharaters: hasSpecialCharaters,
+    hasNumericCharacters: hasNumericCharacters,
   };
   return userInput;
+}
+
+function generatePassword() {
+  var custInfo = passwordOptions();
+  // var custInfo = garuantee();
+  // var custInfo = finalOutput();
+  //empty array = garuntee array, var garuntee need another array called possibilities take these and randomize against a random function then join into a final array then turn that array into a string declare 3 empty arrays
+  //take custinfo with conditions to make sure it is true
+  if (custInfo.isLowerCase) {
+    passwordOptions = passwordOptions.concat(lowerCase);
+    passwordOptions.push(getRandom(lowerCase));
+  }
+  if (custInfo.isUpperCase) {
+    passwordOptions = passwordOptions.concat(upperCase);
+    passwordOptions.push(getRandom(upperCase));
+  }
+  if (custInfo.isSpecialCharaters) {
+    passwordOptions = passwordOptions.concat(specialCharacters);
+    passwordOptions.push(getRandom(specialCharacters));
+  }
+  if (custInfo.isNumericCharacters) {
+    passwordOptions = passwordOptions.concat(numericCharacters);
+    passwordOptions.push(getRandom(numericCharacters));
+  }
+
+  //randomize my garuantee
+  // for (let i = 0; i < garuantee.length; i++) {
+  //   result[i] = garuantee[i];
+  // }
+  // for (let i = 0; i < custInfo.length; i++) {
+  //   var possible = getRandom[possibilities];
+  //   result.push(possible);
+  // }
 }
 function getRandom(arr) {
   var index = Math.floor(Math.random() * arr.length);
   var randomElement = arr[index];
   return randomElement;
 }
-function generatePassword() {
-  var custInfo = passwordOptions();
-  //empty array = garuntee array, var garuntee need another array called possibilities take these and randomize against a random function then join into a final array then turn that array into a string declare 3 empty arrays
-  //take custinfo with conditions to make sure it is true
-  if (custInfo.isLowerCase) {
-    possibilities = possibilities.concat(lowerCase);
-    garuantee.push(getRandom(lowerCase));
-  }
-  if (custInfo.isLowerCase) {
-    possibilities = possibilities.concat(lowerCase);
-    garuantee.push(getRandom(lowerCase));
-  }
-  if (custInfo.isLowerCase) {
-    possibilities = possibilities.concat(lowerCase);
-    garuantee.push(getRandom(lowerCase));
-  }
-  if (custInfo.isLowerCase) {
-    possibilities = possibilities.concat(lowerCase);
-    garuantee.push(getRandom(lowerCase));
-  }
-
-  //randomize my garuantee
-  for (let i = 0; i < garuantee.length; i++) {
-    result[i] = garuantee[i];
-  }
-  for (let i = 0; i < custInfo.length; i++) {
-    var possible = getRandom[possibilities];
-    result.push(possible);
-  }
-}
-//
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
@@ -174,5 +176,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-//define and array of all lower case letter etc
